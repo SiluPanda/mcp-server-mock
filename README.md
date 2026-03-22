@@ -3,6 +3,7 @@
 Programmable mock MCP server for integration testing.
 
 [![npm version](https://img.shields.io/npm/v/mcp-server-mock.svg)](https://www.npmjs.com/package/mcp-server-mock)
+[![npm downloads](https://img.shields.io/npm/dt/mcp-server-mock.svg)](https://www.npmjs.com/package/mcp-server-mock)
 [![license](https://img.shields.io/npm/l/mcp-server-mock.svg)](https://github.com/SiluPanda/mcp-server-mock/blob/master/LICENSE)
 [![node](https://img.shields.io/node/v/mcp-server-mock.svg)](https://nodejs.org)
 
