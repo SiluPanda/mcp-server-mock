@@ -41,7 +41,7 @@ export class AssertionHelper {
     );
 
     if (!hasMatch) {
-      const callSummary = this.formatCallArgs(calls);
+      const callSummary = this.formatCalls(calls);
       throw new Error(
         `Expected tool "${toolName}" to be called with ${JSON.stringify(args)}, but no matching call was found.${callSummary}`,
       );
@@ -142,15 +142,6 @@ export class AssertionHelper {
     return '\n  Actual calls:\n' + lines.join('\n');
   }
 
-  /** Format call arguments for error messages. */
-  private formatCallArgs(calls: ReadonlyArray<RecordedRequest>): string {
-    if (calls.length === 0) return '';
-    const lines = calls.map(
-      (c) =>
-        `  [${c.seq}] ${c.params?.name ?? c.method}(${JSON.stringify(c.params?.arguments ?? {})}) at ${c.timestamp}`,
-    );
-    return '\n  Actual calls:\n' + lines.join('\n');
-  }
 }
 
 /** Deep equality check for argument matching. */

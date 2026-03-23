@@ -344,6 +344,10 @@ export class MockMCPServer {
       return response;
     } catch (err) {
       const durationMs = Date.now() - startTime;
+
+      // Process scenario transitions even on error — the request was received
+      this.scenarioManager.processRequest(request.method, params);
+
       const mockError = isMockError(err)
         ? err
         : MockErrors.internalError(err instanceof Error ? err.message : String(err));

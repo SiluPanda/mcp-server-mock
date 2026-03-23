@@ -40,6 +40,9 @@ export class ToolBuilder {
 
   /** Add random jitter to the delay. */
   withJitter(minMs: number, maxMs: number): this {
+    if (minMs > maxMs) {
+      throw new Error(`withJitter: minMs (${minMs}) must be <= maxMs (${maxMs})`);
+    }
     this.handler.jitter = [minMs, maxMs];
     return this;
   }

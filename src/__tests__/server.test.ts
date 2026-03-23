@@ -663,6 +663,29 @@ describe('MockMCPServer', () => {
       server.setState('active');
       expect(server.currentState).toBe('active');
     });
+
+    it('scenario transitions happen even when handler throws', async () => {
+      // Setup: scenario transitions from 'start' to 'errored' on tools/call
+      server.tool('failing-tool').throws({ code: -32000, message: 'Intentional error' });
+      server.scenario({
+        initialState: 'start',
+        transitions: [
+          { from: 'start', method: 'tools/call', match: { name: 'failing-tool' }, to: 'errored' },
+        ],
+      });
+
+      expect(server.currentState).toBe('start');
+
+      // Call the failing tool — should error BUT still transition state
+      const response = await server.handleRequest(req('tools/call', {
+        name: 'failing-tool',
+        arguments: {},
+      }, 2));
+
+      expect(response.error).toBeDefined();
+      // The key assertion: state should have transitioned despite the error
+      expect(server.currentState).toBe('errored');
+    });
   });
 
   // ── Fixture Loading ────────────────────────────────────────────────
