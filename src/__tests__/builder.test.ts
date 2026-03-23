@@ -55,6 +55,15 @@ describe('ToolBuilder', () => {
     expect(handler.jitter).toEqual([100, 500]);
   });
 
+  it('withJitter throws if minMs > maxMs', () => {
+    const handler = makeHandler<ToolResponse>();
+    const builder = new ToolBuilder(handler);
+
+    expect(() => {
+      builder.returns({ content: [] }).withJitter(500, 100);
+    }).toThrow('minMs');
+  });
+
   it('should set timeout via timesOut()', () => {
     const handler = makeHandler<ToolResponse>();
     const builder = new ToolBuilder(handler);
